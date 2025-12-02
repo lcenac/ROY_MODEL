@@ -7,7 +7,7 @@ from nba_api.stats.endpoints import LeagueDashPlayerStats, DraftBoard
 # Sources
 #https://www.geeksforgeeks.org/machine-learning/understanding-logistic-regression/
 #https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
-#https://www.codecademy.com/article/linear-regression-with-scikit-learn-a-step-by-step-guide-using-python
+#https://www.geeksforgeeks.org/machine-learning/ml-logistic-regression-using-python/
 
 CSV_FILE = "nba_api_roy_dataset_2010_2024.csv"
 OUTPUT_CSV = "predictions.csv"
@@ -17,7 +17,7 @@ season_2025_26 = "2025-26"
 df = pd.read_csv(CSV_FILE)
 
 
-drop_cols = ['PLAYER_ID', 'PLAYER_NAME', 'TEAM_ID', 'TEAM_ABBREVIATION','Season', 'Season_End_Year', 'winner', 'WNBA_FANTASY_PTS_RANK','WNBA_FANTASY_PTS', 'Team_Wins']
+drop_cols = ['PLAYER_ID', 'PLAYER_NAME', 'TEAM_ID', 'TEAM_ABBREVIATION','Season', 'Season_End_Year', 'winner', 'WNBA_FANTASY_PTS_RANK','WNBA_FANTASY_PTS', 'Team_Wins', 'NBA_FANTASY_PTS']
 rookie_stats = df.drop(columns=drop_cols, errors='ignore')
 rookie_stats = rookie_stats.select_dtypes(include='number').dropna(axis=1, how='all')
 numeric_columns = rookie_stats.columns.tolist()
