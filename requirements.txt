@@ -1,6 +1,27 @@
-pandas>=2.0
-numpy>=1.26
-matplotlib>=3.8
-nba_api>=1.1.9
-jupyter>=1.0
-requests>=2.32
+pandas>=2.0.0
+scikit-learn>=1.3.0
+nba-api>=1.2.0
+numpy>=1.24.0
+```
+
+## Final Checklist Before Submitting
+
+- [ ] Run `python generate_roy_csv.py` to verify it works
+- [ ] Run `python roy_p_m.py` to verify it works and generates predictions.csv
+- [ ] Check that `predictions.csv` has two columns: `player_name` and `probability`
+- [ ] Include `roy_winners.csv` in your zip file
+- [ ] All file paths are relative (no absolute paths)
+- [ ] README.md is complete
+- [ ] Create fresh virtual environment and test from scratch
+- [ ] Zip file doesn't include `venv/` or `__pycache__/` folders
+
+## Your Final Zip Structure:
+```
+ROY_MODEL.zip
+├── README.md
+├── requirements.txt
+├── roy_p_m.py
+├── generate_roy_csv.py
+├── nba_api_roy_dataset_2010_2024.csv
+├── roy_winners.csv
+└── predictions.csv

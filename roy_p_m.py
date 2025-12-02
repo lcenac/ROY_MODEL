@@ -17,8 +17,7 @@ season_2025_26 = "2025-26"
 df = pd.read_csv(CSV_FILE)
 
 
-drop_cols = ['PLAYER_ID', 'PLAYER_NAME', 'TEAM_ID', 'TEAM_ABBREVIATION',
-             'Season', 'Season_End_Year', 'winner', 'WNBA_FANTASY_PTS_RANK','WNBA_FANTASY_PTS', 'Team_Wins']
+drop_cols = ['PLAYER_ID', 'PLAYER_NAME', 'TEAM_ID', 'TEAM_ABBREVIATION','Season', 'Season_End_Year', 'winner', 'WNBA_FANTASY_PTS_RANK','WNBA_FANTASY_PTS', 'Team_Wins']
 rookie_stats = df.drop(columns=drop_cols, errors='ignore')
 rookie_stats = rookie_stats.select_dtypes(include='number').dropna(axis=1, how='all')
 numeric_columns = rookie_stats.columns.tolist()
