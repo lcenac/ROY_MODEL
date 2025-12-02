@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "venv/bin/python",  // Use venv path on Mac/Linux
+    // Windows: "venv\\Scripts\\python.exe"
+    "jupyter.notebookFileRoot": "${workspaceFolder}/notebooks",
+    "python.autoComplete.extraPaths": ["./"],
+    "python.analysis.extraPaths": ["./"]
+}
