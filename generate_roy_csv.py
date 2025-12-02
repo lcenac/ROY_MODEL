@@ -1,20 +1,18 @@
-# generate_roy_dataset_nba_api_safe.py
 import pandas as pd
 import time
-from nba_api.stats.endpoints import LeagueDashPlayerStats, LeagueDashTeamStats, DraftBoard
+from nba_api.stats.endpoints import LeagueDashPlayerStats, DraftBoard
 
 # -----------------------------
 # Config
 # -----------------------------
 SEASONS = [f"{y}-{str(y+1)[-2:]}" for y in range(2005, 2025)]
-WINNERS_CSV = "roy_winners.csv"  # CSV with columns SEASON,player_name
+WINNERS_CSV = "roy_winners.csv"  
 OUTPUT_CSV = "nba_api_roy_dataset_2010_2024.csv"
 
 # -----------------------------
 # Fetch rookie stats
 # -----------------------------
 def get_rookies_for_season(season):
-    print(f"Fetching rookie stats for {season}...")
     df = LeagueDashPlayerStats(
         season=season,
         season_type_all_star='Regular Season',
@@ -22,28 +20,14 @@ def get_rookies_for_season(season):
         player_experience_nullable='Rookie'
     ).get_data_frames()[0]
     df['Season'] = season
+    # Use the 'W' column directly from player stats as Team Wins
+    df['Team_Wins'] = df['W']
     return df.reset_index(drop=True)
-
-# -----------------------------
-# Fetch team wins
-# -----------------------------
-def get_team_wins(season):
-    print(f"Fetching team wins for {season}...")
-    try:
-        team_stats = LeagueDashTeamStats(
-            season=season,
-            season_type_all_star='Regular Season',
-            per_mode_detailed='PerGame'
-        ).get_data_frames()[0]
-        return dict(zip(team_stats['TEAM_ABBREVIATION'], team_stats['W']))
-    except:
-        return {}
 
 # -----------------------------
 # Fetch draft pick
 # -----------------------------
 def get_draft_positions(season):
-    print(f"Fetching draft picks for {season}...")
     try:
         draft_df = DraftBoard(season=season).get_data_frames()[0]
         draft_df = draft_df[draft_df['PLAYER_NAME'].notnull()]
@@ -55,13 +39,9 @@ def get_draft_positions(season):
 # Robust Season → End Year
 # -----------------------------
 def season_string_to_end_year(season):
-    """
-    Convert season string like '2010–11' or '2010-11' → 2011
-    Returns None if season is invalid.
-    """
     if not isinstance(season, str):
         return None
-    season = season.replace('–', '-')  # normalize dash
+    season = season.replace('–', '-') 
     parts = season.split('-')
     if len(parts) != 2:
         return None
@@ -84,10 +64,6 @@ for season in SEASONS:
     if rookies.empty:
         continue
 
-    # Add team wins
-    team_wins = get_team_wins(season)
-    rookies['Team_Wins'] = rookies['TEAM_ABBREVIATION'].map(team_wins)
-
     # Add draft pick
     draft_pos = get_draft_positions(season)
     rookies['Draft_Pick'] = rookies['PLAYER_NAME'].map(draft_pos)
@@ -96,7 +72,6 @@ for season in SEASONS:
     time.sleep(1)  # avoid rate limits
 
 df = pd.concat(all_data, ignore_index=True)
-print(f"Collected stats for {len(df)} rookies.")
 
 # -----------------------------
 # Add ROY labels
@@ -105,7 +80,7 @@ winners = pd.read_csv(WINNERS_CSV)
 winners['Season_End_Year'] = winners['SEASON'].apply(season_string_to_end_year)
 
 df['Season_End_Year'] = df['Season'].apply(season_string_to_end_year)
-df = df[df['Season_End_Year'].notnull()]  # drop malformed season rows
+df = df[df['Season_End_Year'].notnull()] 
 
 df = df.merge(
     winners[['Season_End_Year', 'player_name']],
@@ -120,4 +95,4 @@ df = df.drop(columns=['player_name'])
 # Save dataset
 # -----------------------------
 df.to_csv(OUTPUT_CSV, index=False)
-print(f"Dataset saved to {OUTPUT_CSV}. Ready for ML!")
+print(f"Dataset saved to {OUTPUT_CSV}")
