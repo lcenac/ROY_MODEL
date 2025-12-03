@@ -1,7 +1,7 @@
 # NBA Rookie of the Year Prediction Model
 
 ## Project Description 
-This project predicts the probability of each NBA rookie winning the Rookie of the Year (ROY) award using historical data from 2005-2024 and a logistic regression model. The model analyzes per-game statistics, draft positions, and team performance to generate probability scores for current season rookies.
+This project predicts the probability of each NBA rookie winning the Rookie of the Year (ROY) award using historical data from 2005-2025 and a logistic regression model. The model analyzes per-game statistics, draft positions, and team performance to generate probability scores for current season rookies.
 
 
 ## Setup Instructions
