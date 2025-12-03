@@ -5,7 +5,7 @@ from nba_api.stats.endpoints import LeagueDashPlayerStats, DraftBoard
 
 SEASONS = [f"{y}-{str(y+1)[-2:]}" for y in range(2005, 2025)]
 WINNERS_CSV = "roy_winners.csv"  
-OUTPUT_CSV = "nba_api_roy_dataset_2010_2024.csv"
+OUTPUT_CSV = "nba_api_roy_dataset_2005_2024.csv"
 
 
 def get_rookies_for_season(season):

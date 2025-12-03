@@ -9,7 +9,7 @@ from nba_api.stats.endpoints import LeagueDashPlayerStats, DraftBoard
 #https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
 #https://www.geeksforgeeks.org/machine-learning/ml-logistic-regression-using-python/
 
-CSV_FILE = "nba_api_roy_dataset_2010_2024.csv"
+CSV_FILE = "nba_api_roy_dataset_2005_2024.csv"
 OUTPUT_CSV = "predictions.csv"
 season_2025_26 = "2025-26"
 
